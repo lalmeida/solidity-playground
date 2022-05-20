@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.7.5;
-contract MemoryAndStorage {
+contract UsersBalances {
 
     mapping(uint => User) users;
 
@@ -14,7 +14,7 @@ contract MemoryAndStorage {
     }
 
     function updateBalance(uint id, uint balance) public {
-         User memory user = users[id];
+         User storage user = users[id];
          user.balance = balance;
     }
 
