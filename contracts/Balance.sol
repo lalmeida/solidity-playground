@@ -14,8 +14,7 @@ contract UsersBalances {
     }
 
     function updateBalance(uint id, uint balance) public {
-         User storage user = users[id];
-         user.balance = balance;
+         users[id].balance = balance;
     }
 
     function getBalance(uint id) view public returns (uint) {
