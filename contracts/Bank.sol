@@ -10,23 +10,12 @@ contract Bank {
 
     mapping(address => UserAccount) accounts;
 
-    address payable owner;
-
     struct UserAccount {
         address userAddress;
         uint balance;
     }
 
     event balanceUpdated (address userAddress, uint balance);
-
-    constructor () {
-        owner = payable(msg.sender);
-    }
-
-    modifier onlyOwner {
-        require (msg.sender == owner, "User does not have permission for this operation.");
-        _;
-    }
 
     /**
      * Destroy this contract, sending any remaining funds to the owner.
@@ -35,7 +24,7 @@ contract Bank {
         selfdestruct(owner);
     }
 
-    /** 
+    /**
      * User deposits money in their account.
      */
     function deposit () public payable {
@@ -43,7 +32,7 @@ contract Bank {
         emit balanceUpdated(msg.sender, accounts[msg.sender].balance);
     }
 
-    /** 
+    /**
      * User withdraws money from their account.
      */
     function withdraw (uint amount) public {
@@ -54,7 +43,7 @@ contract Bank {
         emit balanceUpdated(msg.sender, accounts[msg.sender].balance);
     }
 
-     /** 
+     /**
      * User requests its own Balance.
      */
     function getBalance() public view returns (uint) {
@@ -62,7 +51,7 @@ contract Bank {
     }
 
 
-    /** 
+    /**
      * Requests Balance of any account.
      * (Should be restricted in production or made private)
      */
