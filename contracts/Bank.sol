@@ -10,12 +10,30 @@ contract Bank {
 
     mapping(address => UserAccount) accounts;
 
+    address payable owner;
+
     struct UserAccount {
         address userAddress;
         uint balance;
     }
 
     event balanceUpdated (address userAddress, uint balance);
+
+    constructor () {
+        owner = payable(msg.sender);
+    }
+
+    modifier onlyOwner {
+        require (msg.sender == owner, "User does not have permission for this operation.");
+        _;
+    }
+
+    /**
+     * Destroy this contract, sending any remaining funds to the owner.
+     */
+    function destroy() public onlyOwner {
+        selfdestruct(owner);
+    }
 
     /** 
      * User deposits money in their account.
