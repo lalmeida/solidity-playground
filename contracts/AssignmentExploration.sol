@@ -13,7 +13,7 @@ contract AssignmentExploration {
 
     mapping (uint => uint) mapStorage;
 
-   function test(uint[] memory memoryArray) public returns (uint[][4] memory) {
+   function testArrays(uint[] memory memoryArray) public returns (uint[][4] memory) {
 
         // Storage from Memory: Ok!
         storageArray = memoryArray;
@@ -39,7 +39,7 @@ contract AssignmentExploration {
 
     } 
 
-    function testMapping () internal view returns 
+    function testMappingAndStruct () internal view returns 
     (TestStruct memory ts, TestStruct storage  ts2, mapping (uint => uint) storage mp ) {
         
         // Mappings in memory: Not Ok. Need to be in storage
