@@ -10,12 +10,14 @@ contract Arrays {
     function testFixed() public returns (uint, uint, uint) {
 
         fixedSizeArray[0].push();
-        //fixedSizeArray[2].pop();
+        //fixedSizeArray[2].pop(); // throws error because array size is zero.
+
+        
 
         return (fixedSizeArray[0].length , fixedSizeArray[1].length, fixedSizeArray[2].length);
     }
 
-   function getDynaLenght() public returns (uint) {
+   function getDynaLenght() public view returns (uint) {
     
         return (dynamicSizeArray.length);
     }
