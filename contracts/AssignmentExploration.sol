@@ -193,5 +193,24 @@ contract DataLocationAndAssignments {
 
     } 
 
+    /** 
+    * It is not possible to convert from Memory to Local Storage.
+    */ 
+    function testLocalStorageFromMemory() public view {
+        
+        // cannot convert from memory to local storage    
+        // TestStructNoMapping storage localStorageTSNoMapping = TestStructNoMapping(1, new uint[](0));
+
+        // cannot convert from memory to local storage    
+        // uint[] storage localStorageArray = new uint[](0);
+
+        // cannot instantiate memory Mappings.
+        // "Mappings can only have a data location of storage and thus are allowed for
+        //  state variables, as storage reference types in functions, or 
+        //  as parameters for library functions"
+        // mapping (uint => uint) storage localMapStorage = mapping (uint => uint);
+
+    }
+
 
 }
