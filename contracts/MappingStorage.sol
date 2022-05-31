@@ -17,7 +17,6 @@ contract MappingStorage {
     function updateEntity(uint _data, address _address) public {
         mappingStorage[msg.sender].myData = _data;
         mappingStorage[msg.sender].myAddress = _address;
-
     }   
 
 
