@@ -27,4 +27,10 @@ contract ArrayStorage {
 
     }  
 
+    function updateEntity(uint index, uint myData) public {
+        require (arrayStorage[index].myAddress == msg.sender, "Caller cannot update this index.");
+        arrayStorage[index].myData = myData;
+    }  
+
+
 }
