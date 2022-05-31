@@ -2,7 +2,7 @@
 pragma solidity 0.8.13;
 
 /**
- * Playing with gas costs 
+ * Experimenting with gas costs 
  */
 contract ArrayStorage {
 
