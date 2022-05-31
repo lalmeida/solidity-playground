@@ -1,6 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
+/**
+ * Playing with gas costs 
+ */
 contract MappingStorage {
 
     struct Entity{
@@ -10,13 +13,12 @@ contract MappingStorage {
 
     mapping (address => Entity) mappingStorage;
 
-    function addEntity(uint _data, address _address) public {
-        mappingStorage[msg.sender] = Entity (_data, _address);
+    function addEntity(uint _data) public {
+        mappingStorage[msg.sender] = Entity (_data, msg.sender);
     }
 
-    function updateEntity(uint _data, address _address) public {
+    function updateEntity(uint _data) public {
         mappingStorage[msg.sender].myData = _data;
-        mappingStorage[msg.sender].myAddress = _address;
     }   
 
 
