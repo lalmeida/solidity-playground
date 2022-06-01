@@ -28,11 +28,13 @@ contract Token {
 
   /*
    * Balance information map.
+   * balances[owner] -> balance
    */
   mapping (address => uint256) internal balances;
 
   /*
    * Token allowance mapping.
+   * allowed[owner][spender] -> allowance;
    */
   mapping (address => mapping (address => uint256)) internal allowed;
 
@@ -97,7 +99,8 @@ contract Token {
    * @param _value The amount of token to be transferred.
    */
   function transfer(address payable _to, uint256 _value) public returns (bool _success){
-
+      moveTokens( msg.sender, _to, _value);
+      return true;
   }
 
   /*
@@ -107,7 +110,9 @@ contract Token {
    * @param _value The amount of tokens to be approved for transfer.
    */
   function approve(address _spender,uint256 _value) public returns (bool _success) {
-
+      allowed[msg.sender][_spender] = _value;
+      emit Approval( msg.sender, _spender, _value);
+      return true;
   }
 
   /*
@@ -115,19 +120,29 @@ contract Token {
    * @param _owner The address of the account owning tokens.
    * @param _spender The address of the account able to transfer the tokens.
    */
-  function allowance(address _owner,address _spender) external view returns (uint256 _remaining){
-    _remaining = allowed[_owner][_spender];
+  function allowance (address _owner,address _spender) external view returns (uint256 _remaining){
+      _remaining = allowed[_owner][_spender];
   }
 
-  /*
-   * @dev Transfers _value amount of tokens from address _from to address _to, and MUST fire the
-   * Transfer event.
-   * @param _from The address of the sender.
-   * @param _to The address of the recipient.
-   * @param _value The amount of token to be transferred.
-   */
-  function transferFrom(address _from,address _to,uint256 _value) public returns (bool _success){
+  /**
+    * @dev Transfers _value amount of tokens from address _from to address _to, and MUST fire the
+    * Transfer event.
+    * @param _from The address of the sender.
+    * @param _to The address of the recipient.
+    * @param _value The amount of token to be transferred.
+    */
+  function transferFrom (address _from, address _to,uint256 _value) public returns (bool _success) {
+        require( _value < allowed[_from][msg.sender], "The spender is not allowed to transfer this amount." );
+        allowed[_from][msg.sender] -= _value;
+        moveTokens( _from, _to, _value);
+        return true;
+  }
 
+  function moveTokens(address _from, address _to, uint256 _value ) private {
+        require(balances[_from] >= _value, "Balance has to be bigger than amount to be transferred.");
+        balances[_from]-=_value;
+        balances[_to]+=_value;
+        emit Transfer ( _from, _to, _value);
   }
 
 }
